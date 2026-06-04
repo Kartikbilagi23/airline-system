@@ -2,13 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Debug PATH') {
+        stage('Debug') {
             steps {
-                sh 'echo $PATH'
-                sh 'which node || true'
-                sh 'which npm || true'
-                sh 'node -v || true'
-                sh 'npm -v || true'
+                sh 'which node'
+                sh 'which npm'
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
     }
