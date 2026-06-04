@@ -3,13 +3,21 @@ pipeline {
 
     stages {
 
-        stage('Environment Check') {
+        stage('Install Dependencies') {
             steps {
-                sh 'which node'
-                sh 'which npm'
-                sh 'node -v'
-                sh 'npm -v'
-                sh 'docker --version'
+                sh 'npm install'
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                sh 'npm run lint || true'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker-compose build'
             }
         }
     }
