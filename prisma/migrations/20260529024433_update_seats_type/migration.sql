@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Booking" ALTER COLUMN "seats" SET DATA TYPE TEXT;

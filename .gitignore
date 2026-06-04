@@ -1,0 +1,27 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+/src/generated/prisma
+
+
+node_modules/
+.env
+
+coverage/
+logs/
+
+dist/
+build/
+
+*.log
+
+grafana-data/
+prometheus-data/
+
+.prisma/
+
+.vscode/
+.idea/
+
+Dockerfile.old

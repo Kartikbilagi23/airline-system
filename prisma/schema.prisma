@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+
+  bookings Booking[]
+}
+
+model Flight {
+  id             Int      @id @default(autoincrement())
+  flightNumber   String
+  source         String
+  destination    String
+  departureTime  DateTime
+  arrivalTime    DateTime
+  price          Float
+  totalSeats     Int
+  availableSeats Int
+  createdAt      DateTime @default(now())
+
+  bookings Booking[]
+  seats    Seat[]
+}
+
+model Seat {
+  id         Int     @id @default(autoincrement())
+  seatNumber String
+  isBooked   Boolean @default(false)
+  flightId   Int
+
+  flight Flight @relation(fields: [flightId], references: [id])
+}
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  flightId  Int
+  seats     String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  idempotencyKey String? @unique
+
+  user   User   @relation(fields: [userId], references: [id])
+  flight Flight @relation(fields: [flightId], references: [id])
+}

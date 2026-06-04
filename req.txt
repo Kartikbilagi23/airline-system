@@ -1,0 +1,17 @@
+rate limiting
+payment integration
+pagination,filtering,sorting
+logging and monitoring
+retries failures using bullmq
+devops layer
+
+
+
+
+project Service	Port
+API (Node)	5000
+Nginx	8081
+Grafana	3000
+Prometheus	9090
+Jenkins	8080
+XAMPP	80

@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    container_name: airline-api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  worker:
+    build: .
+    container_name: airline-worker
+    command: node src/worker/paymentWorker.js
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    networks:
+      - app-network
+  
+  email_worker:
+    build: .
+    container_name: airline-email_worker
+    command: node src/worker/emailWorker.js
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7
+    container_name: redis
+    networks:
+      - app-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - app-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+networks:
+  app-network:
