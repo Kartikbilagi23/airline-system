@@ -18,7 +18,7 @@ pipeline {
 stage('Deploy') {
     steps {
         sh '''
-        docker-compose down || true
+        docker rm -f redis prometheus grafana nginx airline-api airline-worker airline-email_worker || true
         docker-compose up -d --build
         '''
     }
