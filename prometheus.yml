@@ -19,14 +19,10 @@ rule_files:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "airline-backend"
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
+  - job_name: airline-backend
     static_configs:
       - targets: ["airline-api:5000"]
-       # The label name is added as a label `label_name=<label_value>` to any timeseries scraped from this config.
-        labels:
-          app: "airline-backend"
+
+  - job_name: airline-worker
+    static_configs:
+      - targets: ["airline-worker:5001"]

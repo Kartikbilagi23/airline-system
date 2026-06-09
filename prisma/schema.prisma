@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -10,18 +10,17 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
-  role      String   @default("USER")
-  createdAt DateTime @default(now())
-
-  bookings Booking[]
+  role      String    @default("USER")
+  createdAt DateTime  @default(now())
+  bookings  Booking[]
 }
 
 model Flight {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   flightNumber   String
   source         String
   destination    String
@@ -30,10 +29,9 @@ model Flight {
   price          Float
   totalSeats     Int
   availableSeats Int
-  createdAt      DateTime @default(now())
-
-  bookings Booking[]
-  seats    Seat[]
+  createdAt      DateTime  @default(now())
+  bookings       Booking[]
+  seats          Seat[]
 }
 
 model Seat {
@@ -41,19 +39,17 @@ model Seat {
   seatNumber String
   isBooked   Boolean @default(false)
   flightId   Int
-
-  flight Flight @relation(fields: [flightId], references: [id])
+  flight     Flight  @relation(fields: [flightId], references: [id])
 }
 
 model Booking {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  flightId  Int
-  seats     String
-  status    String   @default("PENDING")
-  createdAt DateTime @default(now())
-  idempotencyKey String? @unique
-
-  user   User   @relation(fields: [userId], references: [id])
-  flight Flight @relation(fields: [flightId], references: [id])
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  flightId       Int
+  seats          String
+  status         String   @default("PENDING")
+  createdAt      DateTime @default(now())
+  idempotencyKey String?  @unique
+  flight         Flight   @relation(fields: [flightId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
 }

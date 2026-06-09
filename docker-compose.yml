@@ -17,6 +17,8 @@ services:
     build: .
     container_name: airline-worker
     command: node src/worker/paymentWorker.js
+    ports:
+      - 5001:5001
     depends_on:
       - redis
     env_file:

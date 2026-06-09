@@ -2,8 +2,8 @@ type SeatSelectionProps = {
     selectedSeats: string[];
     setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>
 
-lockedSeats:String[];
-bookedSeats:String[];
+lockedSeats:string[];
+bookedSeats:string[];
 
 }
 //to pass setter function from parent comp to child

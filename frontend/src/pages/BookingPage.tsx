@@ -27,6 +27,13 @@ const BookingPage = () => {
         console.log(error)
       }
     }
+    const fetchSeats = async () => {
+      const res = await api.get(`/bookings/available-seats/${id}`);
+      const booked = res.data.filter((s: any) => s.isBooked).map((s: any) => s.seatNumber);
+      const locked = res.data.filter((s: any) => s.isLocked).map((s: any) => s.seatNumber);
+      setbookedSeats(booked);
+      setlockedSeats(locked);
+    }
     // const fetchavailable = async () => {
     //   try {
     //     const res = await api.get(`/availableSeats/${id}`);
@@ -37,7 +44,7 @@ const BookingPage = () => {
     // }
 
     fetchflight()
-    // fetchavailable();
+    fetchSeats()
   }, [id])
   if (!flight) {
     return <p>Loading...</p>
@@ -79,29 +86,29 @@ const BookingPage = () => {
           bg-white
           rounded-3xl p-6 sticky top-8
           ">
-            <h2 
-            className="text-2xl font-bold mb-6"
+            <h2
+              className="text-2xl font-bold mb-6"
             >Flight Summary</h2>
             <div className="space-y-3">
               <p
-              className="text-3xl font-bold text-blue-600" 
+                className="text-3xl font-bold text-blue-600"
               >{flight.flightNumber}</p>
               <p
-              className="text-xl"
+                className="text-xl"
               >{flight.source}{" → "}{flight.destination}</p>
-              <p 
-              className="text-gray-500"
+              <p
+                className="text-gray-500"
               >Available Seats:{" "}{flight.availableSeats}</p>
               <div
-              className="
+                className="
               mt-6 border-t pt-4
               "
               >
                 <p className="text-gray-500">Total Price</p>
                 <p className="text-3xl font-bold text-green-600">
-              ₹
-              {flight.price *
-                selectedSeats.length}
+                  ₹
+                  {flight.price *
+                    selectedSeats.length}
                 </p>
               </div>
             </div>
@@ -112,13 +119,13 @@ const BookingPage = () => {
           <div className="bg-white rounded-3xl shadow-xl p-8">
             <h1>Passenger Details</h1>
             <form
-            onSubmit={handlelockseat}
-            className="space-y-6"
+              onSubmit={handlelockseat}
+              className="space-y-6"
             >
               <input type="text"
-              value={name}
-              onChange={(e)=>setname(e.target.value)}
-              className="w-full
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+                className="w-full
               border
               border-gray-200
               p-4
@@ -127,12 +134,12 @@ const BookingPage = () => {
               focus:ring-2
               focus:ring-blue-500
               "
-              placeholder="Passenger Name"
+                placeholder="Passenger Name"
               />
               <input type="email"
-              value={email}
-              onChange={(e)=>setemail(e.target.value)}
-              className="
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                className="
               w-full
               border
               border-gray-200
@@ -142,11 +149,11 @@ const BookingPage = () => {
               focus:ring-2
               focus:ring-blue-500
               "
-              placeholder="Passenger Email"
+                placeholder="Passenger Email"
               />
               <div>
                 <h2
-                className="text-2xl font-bold mb-4"
+                  className="text-2xl font-bold mb-4"
                 >Select Seats</h2>
                 <SeatSelection
                   selectedSeats={selectedSeats}
@@ -156,7 +163,7 @@ const BookingPage = () => {
                 />
               </div>
               <button
-              className="
+                className="
               w-full
               bg-blue-600
               hover:bg-blue-700
@@ -164,14 +171,14 @@ const BookingPage = () => {
               py-4 rounded-2xl
               text-lg font-semibold transition-all duration-300 hover:shadow-2xl
               "
-              onClick={()=>navigate('/checkout',{
-                state:{
-                  flight,
-                  selectedSeats
-                }
-              })}
+                onClick={() => navigate('/checkout', {
+                  state: {
+                    flight,
+                    selectedSeats
+                  }
+                })}
 
-              >{loading?"Processing...":"Continue Booking"}</button>
+              >{loading ? "Processing..." : "Continue Booking"}</button>
             </form>
           </div>
         </div>

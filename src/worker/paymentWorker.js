@@ -2,8 +2,11 @@ const { Worker } = require("bullmq")
 const prisma = require("../configs/db")
 const redis = require("../configs/redis");
 const deadLetterQueue = require("../queues/deadLetterQueue");
-const { bookingCounter } = require("../configs/metric");
+const { bookingCounter,client } = require("../configs/metric");
 const EmailQueue = require("../queues/EmailQueue");
+const express=require("express")
+
+const app=express()
 
 const worker = new Worker('paymentQueue', async job => {
     const { userId, seats, idempotencyKey } = job.data;
@@ -121,4 +124,14 @@ worker.on('failed', async (job, err) => {
         console.log("Moved to Dead Letter Queue");
     }
 });
+
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
+
+app.listen(5001, () => {
+  console.log("Worker metrics on 5001");
+});
+
 

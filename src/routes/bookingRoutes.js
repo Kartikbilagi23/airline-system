@@ -124,28 +124,33 @@ router.get("/:id",async (req,res) => {
         })
     }
 })
-router.get('/available-seats/:flightId',async (req,res) => {
+router.get('/available-seats/:flightId', async (req, res) => {
     try {
-        const {flightId}=req.params;
-        const seats=await prisma.flight.findMany({
-            where:{flightId:parseInt(flightId)}
-        })
-        const result=[]
-        for (let seat of seats){
-            const lockkey=`seatLock:${flightId}:${seat.seatNumber}`;
-            const lockedBy=await redis.get(lockkey);
-            result.push({
-                seatNumber:seat.seatNumber,
-                isBooked:seat.isBooked,
-                islocked:!!lockedBy,
-            })
-        }
-        res.json(result);
-    } catch (error) {
-        res.status(500).json({error:error.message});
-    }
-})
+        const flightId = parseInt(req.params.flightId);
 
+        const seats = await prisma.seat.findMany({
+            where: { flightId:parseInt(flightId) }
+        });
+
+        const result = await Promise.all(
+            seats.map(async (seat) => {
+                const lockKey = `seatLock:${flightId}:${seat.seatNumber}`;
+                const lockedBy = await redis.get(lockKey);
+
+                return {
+                    seatNumber: seat.seatNumber,
+                    isBooked: seat.isBooked,
+                    isLocked: !!lockedBy
+                };
+            })
+        );
+
+        res.json(result);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
