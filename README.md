@@ -57,8 +57,9 @@ React App → API Gateway (Nginx) → Backend Services
 ### 📊 Grafana Dashboard
 ### 🌐 Application UI
 ![Jenkins Pipeline & others](1.png)
+![Jenkins Pipeline & others](frontweb.png)
 
-![Frontend](2.png)
+![Frontend sections](2.png)
 
 ### 🌐 Payment Success
 ![Frontend](3.png)
@@ -67,7 +68,7 @@ React App → API Gateway (Nginx) → Backend Services
 ### 🌐 Ticket Generation
 ![Frontend](5.png)
 ### 🌐 Email Service
-![Frontend](6.jpeg)
+![Frontend](6.png)
 
 ---
 
