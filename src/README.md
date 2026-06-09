@@ -53,20 +53,21 @@ React App → API Gateway (Nginx) → Backend Services
 ## 📸 Screenshots
 
 ### 🔧 Jenkins CI/CD Pipeline
-
-![Jenkins Pipeline](./assets/jenkins.png)
-
 ### 🐳 Docker Containers Running
-
-![Docker PS](./assets/docker.png)
-
 ### 📊 Grafana Dashboard
-
-![Grafana](./assets/grafana.png)
-
 ### 🌐 Application UI
+![Jenkins Pipeline & others](1.png)
 
-![Frontend](./assets/frontend.png)
+![Frontend](2.png)
+
+### 🌐 Payment Success
+![Frontend](3.png)
+### 🌐 My Bookings
+![Frontend](4.png)
+### 🌐 Ticket Generation
+![Frontend](5.png)
+### 🌐 Email Service
+![Frontend](6.jpeg)
 
 ---
 
@@ -133,11 +134,15 @@ Every push to GitHub triggers:
 ✔ CI/CD pipeline working
 ✔ Monitoring integrated
 ✔ Frontend local (dev mode)
+✔ Payment Api Gateway  (test mode)
+✔ Email Service
 
 ---
 
 ## 📫 Author
 
 Kartik Bilagi
-LinkedIn: https://linkedin.com/in/your-profile
-GitHub: https://github.com/your-profile
+
+LinkedIn: https://www.linkedin.com/in/kartik-bilagi-3aaa63328
+
+GitHub: https://github.com/Kartikbilagi23
